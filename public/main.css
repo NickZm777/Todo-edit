@@ -4,6 +4,7 @@
 
 #root {
   width: 100%;
+  background-color: grey;
 }
 
 #app-container {
@@ -27,18 +28,33 @@
 
 #todo-text {
   width: 100%;
+  text-align: center;
+  font-size: 20px;
+  padding: 7px;
+  font-family: calibri;
+  box-shadow: 2px 3px 10px;
+  background: transparent;
+  border: none;
+}
+
+::placeholder {
+  font-family: segoe print;
 }
 
 .item {
-  border: 1px dotted gray;
   padding-bottom: 10px;
   padding-left: 5px;
   padding-right: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  margin-top: 18px;
+  box-shadow: 2px 3px 10px;
+  background: transparent;
+  border-radius: 2px;
 }
 
 .item > h3 {
   font-weight: 400;
+  text-align: center;
 }
 
 .info-block {
@@ -91,4 +107,16 @@
 .todo-list {
   display: flex;
   flex-direction: column-reverse;
+}
+
+.edit-form-container h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-family: comic sans ms;
+}
+
+#add-todo-button:hover {
+  background: transparent;
+  border: none;
+  transition: 500ms;
 }
