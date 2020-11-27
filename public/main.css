@@ -115,8 +115,8 @@
   font-family: comic sans ms;
 }
 
-#add-todo-button:hover {
+/* :hover {
   background: transparent;
   border: none;
   transition: 500ms;
-}
+} */
