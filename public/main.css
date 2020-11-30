@@ -2,9 +2,14 @@
   box-sizing: border-box;
 }
 
+body {
+  height: 700px;
+  background-color: rgb(43, 41, 41);
+}
+
 #root {
   width: 100%;
-  background-color: grey;
+  background-color: rgb(43, 41, 41);
 }
 
 #app-container {
@@ -24,6 +29,7 @@
 .form-row-right {
   float: right;
   margin-bottom: 10px;
+  margin-top: 5px;
 }
 
 #todo-text {
@@ -63,6 +69,7 @@
 
 .status-panel {
   flex-grow: 4;
+  color: white;
 }
 
 .created-date-panel {
@@ -96,14 +103,28 @@
 
 .delete-button {
   width: 125px;
-  color: red;
+  color: #ff3838;
 }
 
 .done-button {
   width: 125px;
-  color: blue;
+  color: #bbbbf7;
 }
 
+#add-todo-button,
+#clear-form-button {
+  background-color: transparent;
+  border-radius: 2px;
+  color: rgba(255, 253, 253, 0.815);
+  border: 1px solid rgba(255, 253, 253, 0.815);
+  margin-left: 10px;
+}
+
+#add-todo-button:hover,
+#clear-form-button:hover {
+  box-shadow: inset 2px 3px 10px;
+  transition: 400ms;
+}
 .todo-list {
   display: flex;
   flex-direction: column-reverse;
@@ -120,3 +141,51 @@
   border: none;
   transition: 500ms;
 } */
+
+h2,
+.created-date-panel,
+.done-date-panel,
+.status-panel,
+.list-filter-container,
+#todo-text,
+.empty-list {
+  color: rgba(255, 253, 253, 0.815);
+  font-family: cursive;
+}
+
+h3 {
+  color: #bbbbf7;
+  text-transform: uppercase;
+  font-family: cursive;
+}
+
+button,
+#add-todo-button,
+#clear-form-button {
+  font-family: cursive;
+}
+
+button {
+  background-color: transparent;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 253, 253, 0.815);
+}
+
+button:hover {
+  box-shadow: inset 2px 3px 10px;
+  transition: 400ms;
+}
+
+.done-date-panel {
+  color: #bbbbf7;
+}
+
+h1 {
+  color: #bbbbf7;
+  font-family: cursive;
+  font-weight: bold;
+}
+
+h2 {
+  font-style: italic;
+}
