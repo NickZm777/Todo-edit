@@ -88,17 +88,17 @@ body {
 
 .view-button {
   width: 125px;
-  color: aquamarine;
+  color: #59e1b4;
 }
 
 .postpone-button {
   width: 125px;
-  color: orange;
+  color: #dd9209;
 }
 
 .resume-button {
   width: 125px;
-  color: green;
+  color: rgb(1, 151, 1);
 }
 
 .delete-button {
@@ -116,7 +116,7 @@ body {
   background-color: transparent;
   border-radius: 2px;
   color: rgba(255, 253, 253, 0.815);
-  border: 1px solid rgba(255, 253, 253, 0.815);
+  border: 1px solid rgba(123, 122, 122, 0.82);
   margin-left: 10px;
 }
 
@@ -168,7 +168,7 @@ button,
 button {
   background-color: transparent;
   border-radius: 2px;
-  border: 1px solid rgba(255, 253, 253, 0.815);
+  border: 1px solid rgb(66, 65, 65);
 }
 
 button:hover {
