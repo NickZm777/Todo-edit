@@ -3,6 +3,7 @@ import Todo from "./todo.js";
 class TodoStorage {
   constructor() {
     this.storage = {};
+
     this.currentId = 0;
     this.todoCount = 0;
   }
@@ -16,6 +17,18 @@ class TodoStorage {
 
   totalTodoCount() {
     return this.todoCount;
+  }
+
+  getTodoById(id) {
+    const todo = this.storage[id];
+    return {
+      id,
+      text: todo.text,
+      state: todo.state,
+      dateCreated: new Date(todo.dateCreated),
+      dateCompleted:
+        todo.dateCompleted !== null ? new Date(todo.dateCompleted) : null,
+    };
   }
 
   postponeById(id) {

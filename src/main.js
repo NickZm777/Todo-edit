@@ -1,3 +1,4 @@
+import { describeEventHandlers } from "./events/listEventHandlers.js";
 import { setupEventListeners } from "./events.js";
 
 export function startApplication(doc) {
@@ -7,5 +8,5 @@ export function startApplication(doc) {
 
   console.log(`Root div is ${rootDiv === null ? "not found" : "found"}`);
 
-  setupEventListeners(doc);
+  setupEventListeners(doc, describeEventHandlers(doc));
 }
