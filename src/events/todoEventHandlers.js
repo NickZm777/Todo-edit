@@ -1,14 +1,16 @@
 import todoStorage from "../model/todoStorage.js";
-import renderFullTodoItem from "../view/fullTodo.js";
+import renderTodoPage from "../view/todoPage/todoPage.js";
+import renderTodoListPage from "../view/todoListPage/todoListPage.js";
 
 function renderTodoScreen(doc, event) {
   const todoId = event.detail.todoId;
   console.log(`Rendering todo screen for todo: ${todoId}`);
-  renderFullTodoItem(doc, todoStorage.getTodoById(todoId));
+  renderTodoPage(doc, todoStorage.getTodoById(todoId));
 }
 
-function renderListScreen(doc) {
+function renderListPage(doc) {
   console.log(`Rendering list screen.`);
+  renderTodoListPage(doc, todoStorage.getAllTodo());
 }
 
 function notifyAboutTodoChange(doc, todoId) {
@@ -26,6 +28,7 @@ function notifyAboutBackToListView(doc) {
 function todoListActionHandler(doc, event) {
   const actionName = event.target.dataset["action"];
   const todoId = event.target.dataset["id"];
+
   switch (actionName) {
     case "back-to-list":
       console.log(`Processing back-to-list action for id: ${todoId}`);
@@ -57,22 +60,41 @@ function todoListActionHandler(doc, event) {
   }
 }
 
+let boundTodoListActionHandler = null;
+let boundRenderTodoScreen = null;
+let boundRenderListPage = null;
+
 export function getTodoEventHandlers(doc) {
+  boundTodoListActionHandler =
+    boundTodoListActionHandler !== null
+      ? boundTodoListActionHandler
+      : todoListActionHandler.bind(null, doc);
+
+  boundRenderTodoScreen =
+    boundRenderTodoScreen !== null
+      ? boundRenderTodoScreen
+      : renderTodoScreen.bind(null, doc);
+
+  boundRenderListPage =
+    boundRenderListPage !== null
+      ? boundRenderListPage
+      : renderListPage.bind(null, doc);
+
   return [
     {
       elementId: "todo-list",
       eventName: "click",
-      handler: todoListActionHandler.bind(null, doc),
+      handler: boundTodoListActionHandler,
     },
     {
       element: doc,
       eventName: "full-todo-item-changed",
-      handler: renderTodoScreen.bind(null, doc),
+      handler: boundRenderTodoScreen,
     },
     {
       element: doc,
       eventName: "back-to-list-fired",
-      handler: renderListScreen.bind(null, doc),
+      handler: boundRenderListPage,
     },
   ];
 }

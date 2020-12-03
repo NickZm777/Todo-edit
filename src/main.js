@@ -1,12 +1,8 @@
-import { describeEventHandlers } from "./events/listEventHandlers.js";
-import { setupEventListeners } from "./events.js";
+import todoStorage from "./model/todoStorage.js";
+import renderTodoListPage from "./view/todoListPage/todoListPage.js";
 
 export function startApplication(doc) {
   console.log("TODO Application started");
 
-  const rootDiv = doc.getElementById("root");
-
-  console.log(`Root div is ${rootDiv === null ? "not found" : "found"}`);
-
-  setupEventListeners(doc, describeEventHandlers(doc));
+  renderTodoListPage(doc, todoStorage.getAllTodo());
 }

@@ -1,7 +1,10 @@
-import { createElement } from "../helpers.js";
-import todoState from "../model/todoState.js";
-import { getTodoEventHandlers } from "../events/todoEventHandlers.js";
-import { setupEventListeners } from "../events.js";
+import todoState from "../../model/todoState.js";
+
+import { createElement } from "../../helpers.js";
+import { clearRootElement } from "../../helpers.js";
+
+import { getTodoEventHandlers } from "../../events/todoEventHandlers.js";
+import { setupEventListeners } from "../../events.js";
 
 function renderTextBlock(doc, todo) {
   const textItem = createElement(doc, "h3");
@@ -110,11 +113,10 @@ function renderControlBlock(doc, todo) {
   return controlBlock;
 }
 
-export default function renderFullTodoItem(doc, todo) {
-  const rootElement = doc.querySelector("#root");
-  rootElement.querySelectorAll("*").forEach((n) => n.remove());
+export default function renderTodoPage(doc, todo) {
+  const rootElement = clearRootElement(doc);
 
-  const container = createElement(doc, "div", "");
+  const container = createElement(doc, "div");
   container.id = "todo-list";
 
   const todoItem = createElement(doc, "div", "item");

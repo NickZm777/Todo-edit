@@ -1,5 +1,5 @@
-import { createElement } from "../helpers.js";
-import todoState from "../model/todoState.js";
+import { createElement } from "../../helpers.js";
+import todoState from "../../model/todoState.js";
 
 function renderTextBlock(doc, todo) {
   const textItem = createElement(doc, "h3");
