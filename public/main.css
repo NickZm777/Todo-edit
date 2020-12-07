@@ -111,6 +111,10 @@ body {
   color: #bbbbf7;
 }
 
+.back-to-list-button {
+  color: wheat;
+}
+
 #add-todo-button,
 #clear-form-button {
   background-color: transparent;
