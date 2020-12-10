@@ -26,11 +26,16 @@ function renderStatusPanel(doc, todo) {
 }
 
 function formatDateForPanel(prefix, date) {
-  const datePart = `${date.getDate()}.${
-    date.getMonth() + 1
-  }.${date.getFullYear()}`;
+  const datePart = date.toLocaleString("ru", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+  });
 
-  const timePart = `${date.getHours()}:${date.getMinutes()}`;
+  const timePart = date.toLocaleString("ru", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return `${prefix}: ${datePart} - ${timePart}`;
 }
