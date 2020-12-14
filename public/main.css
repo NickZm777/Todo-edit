@@ -187,3 +187,45 @@ h1 {
 h2 {
   font-style: italic;
 }
+
+#total-counter-text {
+  color: rgba(255, 255, 255, 0.945);
+  padding-right: 5px;
+}
+
+#total-counter-number {
+  color: rgb(220, 182, 255);
+}
+
+.list-filter-container a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.945);
+}
+
+.list-filter-container a:hover {
+  color: #bbbbf7;
+}
+
+.list-filter-container {
+  margin-bottom: 20px;
+}
+
+.report-container {
+  box-sizing: border-box;
+  background-color: #dd9209;
+  width: 100%;
+}
+
+.report-info {
+  text-align: center;
+  color: black;
+}
+
+.postponed-info,
+.resumed-info,
+.done-info,
+.deleted-info {
+  padding: 20px;
+  color: black;
+  font-family: cursive;
+}
