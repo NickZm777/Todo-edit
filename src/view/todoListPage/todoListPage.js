@@ -3,7 +3,7 @@ import renderTodoItem from "./todo.js";
 
 import { getListEventHandlers } from "../../events/listEventHandlers.js";
 import { setupEventListeners } from "../../events.js";
-import configureRouter from "../routerConfig.js";
+import configureRouter from "../../routerConfig.js";
 
 function renderAppContainer(doc) {
   const element = createElement(doc, "div");
@@ -79,7 +79,7 @@ function renderStatPage(doc) {
   statDiv.innerHTML = "<a href='#'>Show statistics</a>";
   statDiv.addEventListener("click", (e) => {
     e.preventDefault();
-    console.log("Trying to render ReportPage");
+    console.log("Simply rendering ReportPage !!!");
     const router = configureRouter(doc, "/");
     router.navigate("report");
   });

@@ -12,7 +12,8 @@ body {
   background-color: rgb(43, 41, 41);
 }
 
-#app-container {
+#app-container,
+.report-container {
   width: 70%;
   margin: auto;
 }
@@ -47,7 +48,8 @@ body {
   font-family: segoe print;
 }
 
-.item {
+.item,
+.report-container {
   padding-bottom: 10px;
   padding-left: 5px;
   padding-right: 5px;
@@ -210,15 +212,9 @@ h2 {
   margin-bottom: 20px;
 }
 
-.report-container {
-  box-sizing: border-box;
-  background-color: #dd9209;
-  width: 100%;
-}
-
 .report-info {
   text-align: center;
-  color: black;
+  color: #bbbbf7;
 }
 
 .postponed-info,
@@ -226,6 +222,18 @@ h2 {
 .done-info,
 .deleted-info {
   padding: 20px;
-  color: black;
+  color: rgba(255, 255, 255, 0.877);
   font-family: cursive;
+}
+
+.back-button {
+  margin: 20px;
+  padding: 1px 30px;
+  color: #e99b0a;
+}
+
+.clear-statistics-button {
+  margin: 20px;
+  padding: 1px 30px;
+  color: #ff3838;
 }
