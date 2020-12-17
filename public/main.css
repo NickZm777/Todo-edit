@@ -237,3 +237,9 @@ h2 {
   padding: 1px 30px;
   color: #ff3838;
 }
+
+.result {
+  padding-left: 10px;
+  font-weight: 800;
+  color: rgb(220, 182, 255);
+}

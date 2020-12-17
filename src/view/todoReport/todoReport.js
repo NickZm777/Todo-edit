@@ -12,13 +12,31 @@ export default function renderReportPage(doc) {
   info.innerHTML = "TODO Statistics";
 
   const postponed = createElement(doc, "div", "postponed-info");
-  postponed.innerHTML = `Total Todo postponed: ${todoStorage.todoPosponed}`;
+  const postponedInfo = createElement(doc, "span");
+  postponedInfo.innerHTML = "Total Todo postponed:";
+
+  const posponedResult = createElement(doc, "span", "result");
+  posponedResult.innerHTML = `${todoStorage.todoPosponed}`;
+
+  postponed.append(postponedInfo, posponedResult);
 
   const done = createElement(doc, "div", "done-info");
-  done.innerHTML = `Total Todo done: ${todoStorage.todoDone}`;
+  const doneInfo = createElement(doc, "span");
+  doneInfo.innerHTML = "Total Todo done:";
+
+  const doneResult = createElement(doc, "span", "result");
+  doneResult.innerHTML = `${todoStorage.todoDone}`;
+
+  done.append(doneInfo, doneResult);
 
   const deleted = createElement(doc, "div", "deleted-info");
-  deleted.innerHTML = `Total Todo deleted: ${todoStorage.todoDeleted}`;
+  const deletedInfo = createElement(doc, "span");
+  deletedInfo.innerHTML = "Total Todo deleted:";
+
+  const deletedResult = createElement(doc, "span", "result");
+  deletedResult.innerHTML = `${todoStorage.todoDeleted}`;
+
+  deleted.append(deletedInfo, deletedResult);
 
   const backButton = createElement(doc, "button", "back-button");
   backButton.innerHTML = "Return to list";
@@ -37,6 +55,8 @@ export default function renderReportPage(doc) {
     todoStorage.todoPosponed = 0;
     todoStorage.todoDone = 0;
     todoStorage.todoDeleted = 0;
+    const router = configureRouter(doc, "/");
+    router.navigate("report");
   });
 
   container.append(info, postponed, done, deleted, backButton, clearButton);
