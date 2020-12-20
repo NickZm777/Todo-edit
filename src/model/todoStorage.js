@@ -1,4 +1,5 @@
 import Todo from "./todo.js";
+import { todoFetch } from "../fetch.js";
 
 class TodoStorage {
   constructor() {
@@ -16,6 +17,7 @@ class TodoStorage {
     this.storage[this.currentId] = newTodo;
     this.currentId += 1;
     this.todoCount += 1;
+    todoFetch("POST", newTodo);
   }
 
   totalTodoCount() {
