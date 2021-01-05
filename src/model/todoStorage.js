@@ -80,19 +80,30 @@ class TodoStorage {
     this.todoDeleted += 1;
   }
 
-  getAllTodo() {
-    return Object.keys(this.storage).map((key) => {
-      const todo = this.storage[key];
+  convertToTodo(todoDto) {
+    const todo = new Todo(todoDto.text);
+    todo.id = todoDto.id;
+    todo.state = todoDto.state;
+    todo.dateCreated = new Date(todoDto.dateCreated);
+    todo.dateCompleted =
+      todoDto.dateCompleted === null ? null : new Date(todoDto.dateCompleted);
 
-      return {
-        id: key,
-        text: todo.text,
-        state: todo.state,
-        dateCreated: new Date(todo.dateCreated),
-        dateCompleted:
-          todo.dateCompleted !== null ? new Date(todo.dateCompleted) : null,
-      };
-    });
+    return todo;
+  }
+
+  async getAllTodo() {
+    const allTodoResponse = await fetch("http://localhost:3000/todo");
+
+    if (!allTodoResponse.ok) {
+      console.log(`Error with status ${allTodoResponse.status}`);
+      return;
+    }
+
+    console.log(`Ok with status ${allTodoResponse.status}`);
+
+    const arrayObj = await allTodoResponse.json();
+    this.todoCount = arrayObj.length;
+    return arrayObj.map((dto) => this.convertToTodo(dto));
   }
 }
 
