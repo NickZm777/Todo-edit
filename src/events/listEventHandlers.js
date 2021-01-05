@@ -5,6 +5,8 @@ import renderTodoList from "../view/todoListPage/todoList.js";
 
 import configureRouter from "../routerConfig.js";
 
+import { todoAllFetch } from "../fetch.js";
+
 function addTodoHandler(doc) {
   console.log("Add button clicked");
   const todoTextInput = getTodoInput(doc);

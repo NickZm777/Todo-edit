@@ -7,6 +7,8 @@ import renderTodoPage from "./view/todoPage/todoPage.js";
 
 import renderReportPage from "./view/todoReport/todoReport.js";
 
+// import { todoAllFetch } from "./fetch.js";
+
 let router = null;
 
 export default (doc, appRootPath) => {

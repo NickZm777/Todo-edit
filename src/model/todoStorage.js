@@ -1,12 +1,14 @@
 import Todo from "./todo.js";
-import { todoFetch } from "../fetch.js";
-
+import { todoCreateFetch } from "../fetch.js";
+import { convertObject } from "../fetch.js";
+import { todoAllFetch } from "../fetch.js";
+import { netDemo } from "../fetch.js";
 class TodoStorage {
   constructor() {
     this.storage = {};
 
-    this.currentId = 0;
-    this.todoCount = 0;
+    // this.currentId = 0;
+    // this.todoCount = 0;
     this.todoPosponed = 0;
     this.todoDone = 0;
     this.todoDeleted = 0;
@@ -15,9 +17,12 @@ class TodoStorage {
   createTodo(text) {
     const newTodo = new Todo(text);
     this.storage[this.currentId] = newTodo;
-    this.currentId += 1;
-    this.todoCount += 1;
-    todoFetch("POST", newTodo);
+    // this.currentId += 1;
+    const todoPost = todoCreateFetch(newTodo);
+
+    // const objS = convertObject(todoPost);
+    // // this.todoCount += 1;
+    // console.log(objS);
   }
 
   totalTodoCount() {
@@ -38,6 +43,7 @@ class TodoStorage {
 
   getTodoById(id) {
     const todo = this.storage[id];
+    // const todo = todoDeleteFetch("GET", id);
     return {
       id,
       text: todo.text,
@@ -68,8 +74,9 @@ class TodoStorage {
   }
 
   deleteById(id) {
-    delete this.storage[id];
-    this.todoCount -= 1;
+    todoDeleteFetch("DELETE", id);
+    // delete todoID;
+    // this.todoCount -= 1;
     this.todoDeleted += 1;
   }
 
