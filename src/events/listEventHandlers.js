@@ -59,7 +59,7 @@ function notifyAboutTodoView(doc, todoId) {
   doc.dispatchEvent(todoItemShown);
 }
 
-function todoListActionHandler(doc, event) {
+async function todoListActionHandler(doc, event) {
   const actionName = event.target.dataset["action"];
   const todoId = event.target.dataset["id"];
 
@@ -70,22 +70,22 @@ function todoListActionHandler(doc, event) {
       break;
     case "postpone":
       console.log(`Processing postpone action for id: ${todoId}`);
-      todoStorage.postponeById(todoId);
+      await todoStorage.postponeById(todoId);
       notifyAboutTodoChange(doc);
       break;
     case "resume":
       console.log(`Processing resume action for id: ${todoId}`);
-      todoStorage.resumeById(todoId);
+      await todoStorage.resumeById(todoId);
       notifyAboutTodoChange(doc);
       break;
     case "done":
       console.log(`Processing done action for id: ${todoId}`);
-      todoStorage.completeById(todoId);
+      await todoStorage.completeById(todoId);
       notifyAboutTodoChange(doc);
       break;
     case "delete":
       console.log(`Processing delete action for id: ${todoId}`);
-      todoStorage.deleteById(todoId);
+      await todoStorage.deleteById(todoId);
       notifyAboutDeletedTodo(doc);
       break;
 
