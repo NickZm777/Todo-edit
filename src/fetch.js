@@ -24,37 +24,18 @@ export async function todoCreateFetch(body) {
   return objConv;
 }
 
-// export async function todoDeleteFetch(method, id) {
-//   const addResponse = await fetch(`http://localhost:3000/todo/${id}`, {
-//     method: `${method}`,
-//     // headers: {
-//     //   "Content-Type": "application/json",
-//     // },
-//     // body: JSON.stringify(body),
-//   });
+export async function deleteToDo(id) {
+  const response = await fetch(`http://localhost:3000/todo/${id}`, {
+    method: "DELETE",
+  });
 
-//   if (!addResponse.ok) {
-//     console.log(`Error with status ${addResponse.status}`);
-//     return;
-//   }
+  if (!response.ok) {
+    console.log(`Error with status ${response.status}`);
+    return;
+  }
 
-//   console.log(`Ok with status ${addResponse.status}`);
-
-//   const data = await addResponse.json();
-//   console.log(data);
-
-//   const response = await fetch("http://localhost:3000/todo");
-
-//   if (!response.ok) {
-//     console.log(`Error with status ${response.status}`);
-//     return;
-//   }
-
-//   console.log(`Ok with status ${response.status}`);
-
-//   const json = await response.json();
-//   console.log(json);
-// }
+  console.log(`Ok with status ${response.status}`);
+}
 
 async function createTodo(todoText) {
   const todo = new Todo(todoText);
@@ -205,12 +186,11 @@ async function completeById(id, todo) {
 }
 
 async function getTodoById(id) {
-  const idResponse = await fetch(`http://localhost:3000/todo/${id}`);
-  const todoById = await idResponse.json();
+  const response = await fetch(`http://localhost:3000/todo/${id}`);
+  const todoById = await response.json();
   console.log(`------------by id---------${todoById}`);
   return todoById;
 }
-getTodoById(2);
 
 export async function netDemo() {
   const todoNumber = Math.trunc(Math.random() * 1000);
@@ -237,3 +217,20 @@ export async function netDemo() {
 }
 
 // netDemo();
+
+async function getToDoById(todoId) {
+  const updateResponse = await fetch(`http://localhost:3000/todo/${todoId}`, {
+    method: "PUT",
+  });
+
+  if (!updateResponse.ok) {
+    console.log(`Error with status ${updateResponse.status}`);
+    return;
+  }
+
+  console.log(`Ok with status ${updateResponse.status}`);
+
+  const updatedTodo = await updateResponse.json();
+
+  return updatedTodo.id;
+}

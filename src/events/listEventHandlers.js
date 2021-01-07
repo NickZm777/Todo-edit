@@ -5,8 +5,6 @@ import renderTodoList from "../view/todoListPage/todoList.js";
 
 import configureRouter from "../routerConfig.js";
 
-import { todoAllFetch } from "../fetch.js";
-
 function addTodoHandler(doc) {
   console.log("Add button clicked");
   const todoTextInput = getTodoInput(doc);
@@ -29,10 +27,10 @@ function updateTotalTodoCount(doc) {
   h2.innerHTML = `${todoStorage.totalTodoCount()}`;
 }
 
-function updateTodoList(doc) {
+async function updateTodoList(doc) {
   console.log("Updating Todo List");
 
-  const allTodo = todoStorage.getAllTodo();
+  const allTodo = await todoStorage.getAllTodo();
   renderTodoList(doc, allTodo);
 }
 
@@ -140,6 +138,7 @@ export function getListEventHandlers(doc) {
       eventName: "click",
       handler: boundaddTodoHandler,
     },
+
     {
       elementId: "clear-form-button",
       eventName: "click",

@@ -1,28 +1,42 @@
 import Todo from "./todo.js";
-import { todoCreateFetch } from "../fetch.js";
-import { convertObject } from "../fetch.js";
-import { todoAllFetch } from "../fetch.js";
-import { netDemo } from "../fetch.js";
+
+const route = "http://localhost:3000/todo";
+
 class TodoStorage {
   constructor() {
     this.storage = {};
 
-    // this.currentId = 0;
-    // this.todoCount = 0;
     this.todoPosponed = 0;
     this.todoDone = 0;
     this.todoDeleted = 0;
   }
 
+  async todoPost(body) {
+    const response = await fetch(route, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      console.log(`Error with status ${addResponse.status}`);
+      return;
+    }
+
+    const object = await response.json();
+    console.log(object);
+    console.log(
+      `ToDo added successfull with id ${object.id} and status ${response.status}`
+    );
+    return object;
+  }
+
   createTodo(text) {
     const newTodo = new Todo(text);
     this.storage[this.currentId] = newTodo;
-    // this.currentId += 1;
-    const todoPost = todoCreateFetch(newTodo);
-
-    // const objS = convertObject(todoPost);
-    // // this.todoCount += 1;
-    // console.log(objS);
+    this.todoPost(newTodo);
   }
 
   totalTodoCount() {
@@ -41,69 +55,108 @@ class TodoStorage {
     return this.todoDeleted;
   }
 
-  getTodoById(id) {
-    const todo = this.storage[id];
-    // const todo = todoDeleteFetch("GET", id);
-    return {
-      id,
-      text: todo.text,
-      state: todo.state,
-      dateCreated: new Date(todo.dateCreated),
-      dateCompleted:
-        todo.dateCompleted !== null ? new Date(todo.dateCompleted) : null,
-    };
+  async getTodoById(id) {
+    const response = await fetch(`${route}/${id}`);
+    const todo = await response.json();
+    console.log(
+      `ToDo with id ${id} rendered successfully - status: ${response.status}`
+    );
+    const convertedToDo = this.todoConverter(todo);
+    return convertedToDo;
   }
 
-  postponeById(id) {
-    const todo = this.storage[id];
+  async deleteToDo(id) {
+    const response = await fetch(`${route}/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      console.log(`Error with status ${response.status}`);
+      return;
+    }
+
+    console.log(
+      `ToDo with id ${id} deleted successfully with status ${response.status}`
+    );
+  }
+
+  async patch(id, body) {
+    const response = await fetch(`${route}/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      console.log(`Error with status ${response.status}`);
+      return;
+    }
+
+    console.log(`Ok with status ${response.status}`);
+
+    const todo = await response.json();
+
+    return todo.id;
+  }
+
+  async postponeById(id) {
+    const todo = this.todoConverter(this.getTodoById(id));
     todo.postpone();
-    this.todoPosponed += 1;
-    this.todoResumed -= 1;
+    const patch = { state: todo.state };
+    return await this.patch(id, patch);
+    // this.todoPosponed += 1;
+    // this.todoResumed -= 1;
   }
 
-  resumeById(id) {
-    const todo = this.storage[id];
+  async resumeById(id) {
+    const todo = this.todoConverter(this.getTodoById(id));
     todo.resume();
-    this.todoPosponed -= 1;
+    const patch = { state: todo.state };
+    return await this.patch(id, patch);
+    // this.todoPosponed -= 1;
   }
 
-  completeById(id) {
-    const todo = this.storage[id];
+  async completeById(id) {
+    const todo = this.todoConverter(this.getTodoById(id));
     todo.done();
-    this.todoDone += 1;
+    const patch = { state: todo.state, dateCompleted: todo.dateCompleted };
+    return await this.patch(id, patch);
+    // this.todoDone += 1;
   }
 
   deleteById(id) {
-    todoDeleteFetch("DELETE", id);
-    // delete todoID;
-    // this.todoCount -= 1;
+    this.deleteToDo(id);
     this.todoDeleted += 1;
   }
 
-  convertToTodo(todoDto) {
-    const todo = new Todo(todoDto.text);
-    todo.id = todoDto.id;
-    todo.state = todoDto.state;
-    todo.dateCreated = new Date(todoDto.dateCreated);
+  todoConverter(dto) {
+    const todo = new Todo(dto.text);
+    todo.id = dto.id;
+    todo.state = dto.state;
+    todo.dateCreated = new Date(dto.dateCreated);
     todo.dateCompleted =
-      todoDto.dateCompleted === null ? null : new Date(todoDto.dateCompleted);
+      dto.dateCompleted === null ? null : new Date(dto.dateCompleted);
 
     return todo;
   }
 
   async getAllTodo() {
-    const allTodoResponse = await fetch("http://localhost:3000/todo");
+    const allTodoResponse = await fetch(route);
 
     if (!allTodoResponse.ok) {
       console.log(`Error with status ${allTodoResponse.status}`);
       return;
     }
 
-    console.log(`Ok with status ${allTodoResponse.status}`);
+    console.log(
+      `All ToDo rendered successfull with status ${allTodoResponse.status}`
+    );
 
     const arrayObj = await allTodoResponse.json();
     this.todoCount = arrayObj.length;
-    return arrayObj.map((dto) => this.convertToTodo(dto));
+    return arrayObj.map((dto) => this.todoConverter(dto));
   }
 }
 
