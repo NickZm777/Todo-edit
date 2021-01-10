@@ -79,7 +79,7 @@ function renderStatPage(doc) {
   statDiv.innerHTML = "<a href='#'>Show statistics</a>";
   statDiv.addEventListener("click", (e) => {
     e.preventDefault();
-    console.log("Simply rendering ReportPage !!!");
+    console.log("Rendering ReportPage");
     const router = configureRouter(doc, "/");
     router.navigate("report");
   });

@@ -5,9 +5,6 @@ const route = "http://localhost:3000/todo";
 class TodoStorage {
   constructor() {
     this.storage = {};
-
-    this.todoPosponed = 0;
-    this.todoDone = 0;
     this.todoDeleted = 0;
   }
 
@@ -41,14 +38,6 @@ class TodoStorage {
 
   totalTodoCount() {
     return this.todoCount;
-  }
-
-  totalTodoPosponed() {
-    return this.todoPosponed;
-  }
-
-  totalTodoDone() {
-    return this.todoDone;
   }
 
   totalTodoDeleted() {
@@ -106,8 +95,6 @@ class TodoStorage {
     todo.postpone();
     const patch = { state: todo.state };
     return await this.patch(id, patch);
-    // this.todoPosponed += 1;
-    // this.todoResumed -= 1;
   }
 
   async resumeById(id) {
@@ -115,7 +102,6 @@ class TodoStorage {
     todo.resume();
     const patch = { state: todo.state };
     return await this.patch(id, patch);
-    // this.todoPosponed -= 1;
   }
 
   async completeById(id) {
@@ -123,7 +109,6 @@ class TodoStorage {
     todo.done();
     const patch = { state: todo.state, dateCompleted: todo.dateCompleted };
     return await this.patch(id, patch);
-    // this.todoDone += 1;
   }
 
   deleteById(id) {
@@ -157,6 +142,46 @@ class TodoStorage {
     const arrayObj = await allTodoResponse.json();
     this.todoCount = arrayObj.length;
     return arrayObj.map((dto) => this.todoConverter(dto));
+  }
+
+  async checkerInProcess() {
+    const allTodoResponse = await fetch(route);
+    const array = [];
+    const data = await allTodoResponse.json();
+    data.forEach((element) => {
+      if (element.state === "in-process") {
+        array.push(element.state);
+      }
+    });
+    console.log(`statistics - in-process: ${array.length}`);
+    return array.length;
+  }
+
+  async checkerPostponed() {
+    const allTodoResponse = await fetch(route);
+    const array = [];
+    const data = await allTodoResponse.json();
+    data.forEach((element) => {
+      if (element.state === "postponed") {
+        array.push(element.state);
+      }
+    });
+    console.log(`statistics - postponed: ${array.length}`);
+    return array.length;
+  }
+
+  async checkerDone() {
+    const allTodoResponse = await fetch(route);
+    const array = [];
+    const data = await allTodoResponse.json();
+    data.forEach((element) => {
+      if (element.state === "done") {
+        array.push(element.state);
+      }
+    });
+    console.log(`statistics - done: ${array.length}`);
+    console.log(`statistics - deleted: ${this.todoDeleted}`);
+    return array.length;
   }
 }
 
